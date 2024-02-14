@@ -107,39 +107,78 @@ Card::Card(Rank rank_in, Suit suit_in){
 
 //EFFECTS Returns the rank
 Rank Card::get_rank() const{
-  assert(false);
+  return rank;
 }
 
 //EFFECTS Returns the suit.  Does not consider trump.
 Suit Card::get_suit() const{
-  assert(false);
+  return suit;
 }
 
 //EFFECTS Returns the suit
 //HINT: the left bower is the trump suit!
 Suit Card::get_suit(Suit trump) const{
-  assert(false);
+  if(rank != JACK)
+  {
+    return suit;
+  }
+  else if(suit == trump){
+    return suit;
+  }
+  else{
+    if((suit == DIAMONDS && trump == HEARTS) 
+    || (suit == HEARTS && trump == DIAMONDS) 
+    || (suit == SPADES && trump == CLUBS) 
+    || (suit == CLUBS && trump == SPADES))
+    {
+      return trump;
+    }
+    else{
+      return suit;
+    }
+  }
+  
 }
 
 //EFFECTS Returns true if card is a face card (Jack, Queen, King or Ace)
 bool Card::is_face_or_ace() const{
-  assert(false);
+  if(rank >=JACK){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 //EFFECTS Returns true if card is the Jack of the trump suit
 bool Card::is_right_bower(Suit trump) const{
-  assert(false);
+  if(suit == trump && rank == JACK){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 //EFFECTS Returns true if card is the Jack of the next suit
 bool Card::is_left_bower(Suit trump) const{
-  assert(false);
+  if ((!is_right_bower(trump)) && (get_suit(trump) == trump) && (rank == JACK)){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 //EFFECTS Returns true if the card is a trump card.  All cards of the trump
 // suit are trump cards.  The left bower is also a trump card.
 bool Card::is_trump(Suit trump) const{
-  assert(false);
+  if(get_suit(trump) == trump){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 
@@ -158,7 +197,7 @@ bool Card::is_trump(Suit trump) const{
 
 //EFFECTS Prints Card to stream, for example "Two of Spades"
 std::ostream & operator<<(std::ostream &os, const Card &card){
-  assert(false);
+  os << card.get_rank() << " of " << card.get_suit();
 }
 
 //EFFECTS Reads a Card from a stream in the format "Two of Spades"
