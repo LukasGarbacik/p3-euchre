@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include "Pack.hpp"
 
 
@@ -9,10 +10,10 @@ using namespace std;
 
 Pack::Pack(){
    int count = 0;
-   for(size_t i = SPADES; i <= DIAMONDS; ++i){
-       for(size_t j = TWO; j <= ACE; ++j){
+   for(size_t i = 0; i <= 3; i++){
+       for(size_t j = 7; j <= 12; j++){
            assert(count < PACK_SIZE);
-           cards[count] = new Card(j, i);
+           cards[count] = Card(static_cast<Rank>(j),static_cast<Suit>(i));
            count++;
        }
    }
@@ -21,44 +22,46 @@ Pack::Pack(){
 
 
 Pack::Pack(istream &pack_input){
-   string garbage;
-   for(size_t i = 0; i < PACK_SIZE; ++i){
-       //further implimentation to come
+    int count = 0;
+   while(pack_input){
+        pack_input >> cards[count];
+        count++;
    }
-
-
+   next = 0;
 }
 
 
-Card deal_one(){
+Card Pack::deal_one(){
    next++;
    return cards[next - 1];
 }
 
 
-void reset(){
+void Pack::reset(){
    next = 0;
 }
 
 
-void shuffle(){
+void Pack::shuffle(){
    int localIndex;
    for(size_t i = 0; i < 7; ++i){
        localIndex = 0;
        Card newDeck [PACK_SIZE];
        for(size_t j = 0; j < PACK_SIZE/2; ++j){
-           newDeck[localIndex] = cards[localIndex + PACK_SIZE/2]
+           newDeck[localIndex] = cards[localIndex + PACK_SIZE/2];
            localIndex++;
            newDeck[j] = cards[localIndex];
            localIndex++;
        }
-       cards = newDeck;
-       delete newDeck;
+       for(int k = 0; k < PACK_SIZE; ++k)
+       {
+        cards[k] = newDeck[k];
+       }
    }
 }
 
 
-bool empty() const{
+bool Pack::empty() const{
    if(next >= 24){
        return true;
    }
