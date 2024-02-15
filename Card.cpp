@@ -286,46 +286,73 @@ Suit Suit_next(Suit suit){
 //EFFECTS Returns true if a is lower value than b.  Uses trump to determine
 // order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, Suit trump){
-  if (a.get_suit() == trump 
-  && b.get_suit() != trump){
-    return true;
-  }
-  else if(b.get_suit() == trump 
-  && a.get_suit() != trump){
-    return false;
-  }
-  else if(a.get_rank() > b.get_rank()){
-    return true;
-  }
-  else{
-    return false;
-  }
+  if (a.get_suit(trump) == trump 
+&& b.get_suit(trump) != trump){
+  return false;
+}
+else if(b.get_suit(trump) == trump 
+&& a.get_suit(trump) != trump){
+  return true;
+}
+else if(a.is_right_bower(trump) 
+&& !b.is_right_bower(trump)){
+  return false;
+}
+else if((b.is_right_bower(trump)  && 
+!a.is_right_bower(trump))
+|| (b.is_left_bower(trump) 
+&& !a.is_left_bower(trump))){
+  return true;
+}
+else if(a.is_left_bower(trump) && !b.is_left_bower(trump)){
+  return  false;
+}
+else if (a.get_rank() >= b.get_rank()){
+  return false;
+}
+else {
+  return true;
+}
 }
 
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
-  if (a.get_suit() == trump 
-&& b.get_suit() != trump){
-  return true;
-}
-else if(b.get_suit() == trump 
-&& a.get_suit() != trump){
+  if (a.get_suit(trump) == trump 
+&& b.get_suit(trump) != trump){
   return false;
 }
-else if(a.get_suit() == led_card.get_suit()
-&& b.get_suit() != led_card.get_suit()){
+else if(b.get_suit(trump) == trump 
+&& a.get_suit(trump) != trump){
   return true;
 }
-else if(a.get_suit() != led_card.get_suit()
-&& b.get_suit() == led_card.get_suit()){
+else if(a.get_suit(trump) == led_card.get_suit(trump)
+&& b.get_suit(trump) != led_card.get_suit(trump)){
   return false;
 }
-else if(a.get_rank() > b.get_rank()){
+else if(a.get_suit(trump) != led_card.get_suit(trump)
+&& b.get_suit(trump) == led_card.get_suit(trump)){
   return true;
 }
-else{
+else if(a.is_right_bower(trump) 
+&& !b.is_right_bower(trump)){
   return false;
+}
+else if((b.is_right_bower(trump)  && 
+!a.is_right_bower(trump))
+|| (b.is_left_bower(trump) 
+&& !a.is_left_bower(trump))){
+  return true;
+}
+else if(a.is_left_bower(trump) 
+&& !b.is_left_bower(trump)){
+  return  false;
+}
+else if (a.get_rank() >= b.get_rank()){
+  return false;
+}
+else {
+  return true;
 }
 
 }
