@@ -286,11 +286,46 @@ Suit Suit_next(Suit suit){
 //EFFECTS Returns true if a is lower value than b.  Uses trump to determine
 // order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, Suit trump){
-  assert(false);
+  if (a.get_suit() == trump 
+  && b.get_suit() != trump){
+    return true;
+  }
+  else if(b.get_suit() == trump 
+  && a.get_suit() != trump){
+    return false;
+  }
+  else if(a.get_rank() > b.get_rank()){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
-  assert(false);
+  if (a.get_suit() == trump 
+&& b.get_suit() != trump){
+  return true;
+}
+else if(b.get_suit() == trump 
+&& a.get_suit() != trump){
+  return false;
+}
+else if(a.get_suit() == led_card.get_suit()
+&& b.get_suit() != led_card.get_suit()){
+  return true;
+}
+else if(a.get_suit() != led_card.get_suit()
+&& b.get_suit() == led_card.get_suit()){
+  return false;
+}
+else if(a.get_rank() > b.get_rank()){
+  return true;
+}
+else{
+  return false;
+}
+
 }
