@@ -32,6 +32,7 @@ TEST(test_right_left_bower)
     Card tenHearts = {TEN, HEARTS};
 
     ASSERT_TRUE(Card_less(tenSpades, nineHearts, tenHearts, tenHearts.get_suit()));
+    ASSERT_TRUE(Card_less(tenSpades,aceSpades, nineHearts, nineHearts.get_suit()));
 
 }
 
