@@ -323,37 +323,35 @@ Suit Suit_next(Suit suit){
 // order, as described in the spec.
 // Key that a is a **LOWER** value than b still false if equal
 bool Card_less(const Card &a, const Card &b, Suit trump){
- if(a.is_right_bower(trump)){ //a = RB always is false
-   return false;
- }
- else if(b.is_right_bower(trump)){ //Since a is not RB, b = RB covers everything
-   return true;
- }
- if(a.is_left_bower(trump)){ //if a is LB
-     if(b.is_right_bower(trump)){ //Only true if b is RB
-       return true;
-     }
-     else{
-       return false;
-     }
- }
- else if(b.is_left_bower(trump)){
-   return true; //Since a cant be RB or LB if entered, b = LB > everything
- }
- //^ Covers all bowers
- if(a.get_suit() == trump && b.get_suit() == trump){
-   return a < b; //No bowers, only evaluating within trump suit
- }
- else if(a.get_suit() == trump && b.get_suit() != trump){
-   return false;
- }
- else if(a.get_suit() != trump && b.get_suit() == trump){
-   return true;
- }
- else{
-   return a < b; // No trump, no bowers
- }
- }
+ if (a.get_suit(trump) == trump
+  && b.get_suit(trump) != trump){
+    return false;
+  }
+  else if(b.get_suit(trump) == trump
+  && a.get_suit(trump) != trump){
+    return true;
+  }
+  else if(a.is_right_bower(trump)
+    && !b.is_right_bower(trump)){
+      return false;
+    }
+  else if((b.is_right_bower(trump)  &&
+    !a.is_right_bower(trump))
+    ||(b.is_left_bower(trump)
+    && !a.is_left_bower(trump))){
+      return true;
+    }
+  else if(a.is_left_bower(trump)
+    && !b.is_left_bower(trump)){
+    return  false;
+  }
+  else if (a.get_rank() >= b.get_rank()){
+    return false;
+  }
+  else {
+    return true;
+  }
+}
 
 
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
