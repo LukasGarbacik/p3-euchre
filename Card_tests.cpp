@@ -88,5 +88,19 @@ TEST(test_card_print){
 
 }
 
+TEST(test_suit_next){
+    Card nineSpades(NINE, SPADES);
+    Card jackDiamonds(JACK, DIAMONDS);
+    Card kingHearts(KING, HEARTS);
+    Card tenClubs(TEN, CLUBS);
+
+    Suit trump = HEARTS;
+
+    ASSERT_TRUE(Suit_next(nineSpades.get_suit()) == CLUBS);
+    ASSERT_TRUE(Suit_next(jackDiamonds.get_suit()) == trump);
+    ASSERT_TRUE(Suit_next(kingHearts.get_suit()) == DIAMONDS);
+    ASSERT_TRUE(Suit_next(tenClubs.get_suit()) == SPADES);
+}
+
 
 TEST_MAIN()
