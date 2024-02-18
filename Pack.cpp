@@ -20,6 +20,7 @@ Pack::Pack(){
 
 Pack::Pack(istream &pack_input){
     int count = 0;
+    
    while(pack_input){
         pack_input >> cards[count];
         count++;

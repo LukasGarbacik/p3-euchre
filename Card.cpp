@@ -345,11 +345,8 @@ bool Card_less(const Card &a, const Card &b, Suit trump){
     && !b.is_left_bower(trump)){
     return  false;
   }
-  else if (a.get_rank() >= b.get_rank()){
-    return false;
-  }
   else {
-    return true;
+    return a < b;
   }
 }
 

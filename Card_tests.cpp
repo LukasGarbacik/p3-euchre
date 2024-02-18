@@ -34,7 +34,7 @@ TEST(test_right_left_bower)
     ASSERT_TRUE(Card_less(tenSpades, nineHearts, tenHearts, tenHearts.get_suit()));
     ASSERT_TRUE(Card_less(tenSpades,aceSpades, nineHearts, nineHearts.get_suit()));
     ASSERT_TRUE(Card_less(tenSpades, tenHearts, HEARTS));
-    ASSERT_FALSE(Card_less(tenSpades,tenHearts, CLUBS));
+    ASSERT_TRUE(Card_less(tenSpades,tenHearts, CLUBS));
 }
 
 TEST(test_greater_less_equal_to)
@@ -56,5 +56,37 @@ TEST(test_greater_less_equal_to)
     ASSERT_TRUE(tenHearts <= aceSpades);
     ASSERT_FALSE(aceSpades <= nineHearts);
 }
+
+TEST(test_left_bower){   
+    Card jackHearts(JACK, HEARTS);
+    Card aceDiamonds(ACE, DIAMONDS);
+    Suit trump = DIAMONDS;
+
+    ASSERT_TRUE(jackHearts.is_trump(trump));
+    ASSERT_FALSE(Card_less(jackHearts,aceDiamonds, trump));
+    ASSERT_TRUE(jackHearts.is_left_bower(trump));
+    ASSERT_TRUE(jackHearts.is_face_or_ace() && aceDiamonds.is_face_or_ace());
+    ASSERT_FALSE(jackHearts.get_suit() == jackHearts.get_suit(trump));
+
+}
+
+TEST(test_card_print){
+    Card nineSpades(NINE, SPADES);
+    Card jackDiamonds(JACK, DIAMONDS);
+    Card kingHearts(KING, HEARTS);
+
+    stringstream card1;
+    stringstream card2;
+    stringstream card3;
+
+    card1 << nineSpades;
+    card2 << jackDiamonds;
+    card3 << kingHearts;
+    ASSERT_TRUE(card1.str() == "Nine of Spades");
+    ASSERT_TRUE(card2.str() == "Jack of Diamonds");
+    ASSERT_TRUE(card3.str() == "King of Hearts");
+
+}
+
 
 TEST_MAIN()
