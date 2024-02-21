@@ -8,6 +8,10 @@
 using namespace std;
 
 
+  //////////////////////////////////////////////////
+ /////  Start of Simple Player Implementation //////
+//////////////////////////////////////////////////
+
 class SimplePlayer : public Player{
  private:
 
@@ -63,9 +67,9 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
 
 
 
-////////////////////////////////////////////////////
-/////  Start of Human Player Implementation ////////
-////////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+ /////  Start of Human Player Implementation //////
+//////////////////////////////////////////////////
 
 class HumanPlayer : public Player{
  private:
@@ -101,11 +105,6 @@ class HumanPlayer : public Player{
     Card lead_card(Suit trump) override;
     Card play_card(const Card &led_card, Suit trump) override;
 };
-
-
-
-
-
 
 bool HumanPlayer::make_trump(const Card &upcard, bool is_dealer,
                 int round, Suit &order_up_suit) const {
