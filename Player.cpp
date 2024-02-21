@@ -7,7 +7,6 @@
 
 using namespace std;
 
-const int MAX_HAND_SIZE = 5; //Global constant to keep player hand sizes in check
 
 class SimplePlayer : public Player{
  private:
@@ -30,26 +29,35 @@ class SimplePlayer : public Player{
      hand.push_back(c);
    }
 
-   bool make_trump(const Card &upcard, bool is_dealer,
-                    int round, Suit &order_up_suit) const override {
-        // Implement the make_trump function logic here
-        // Return true or false based on the player's decision
-    }
-
-    void add_and_discard(const Card &upcard) override {
-        // Implement the add_and_discard function logic here
-    }
-
-    Card lead_card(Suit trump) override {
-        // Implement the lead_card function logic here
-        // Return the card to be led
-    }
-
-    Card play_card(const Card &led_card, Suit trump) override {
-        // Implement the play_card function logic here
-        // Return the card to be played
-    }
+    bool make_trump(const Card &upcard, bool is_dealer,
+                    int round, Suit &order_up_suit) const override;
+    void add_and_discard(const Card &upcard) override;
+    Card lead_card(Suit trump) override;
+    Card play_card(const Card &led_card, Suit trump) override;
 };
+
+
+
+
+bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
+                    int round, Suit &order_up_suit) const 
+{
+  assert(false);
+}
+
+void SimplePlayer::add_and_discard(const Card &upcard) 
+{
+  assert(false);
+}
+
+Card SimplePlayer::lead_card(Suit trump) 
+{
+  assert(false);
+}
+
+Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
+  assert(false);
+}
 
 
 
@@ -68,7 +76,9 @@ class HumanPlayer : public Player{
 
 
  public:
-   HumanPlayer(string nameInput);
+   HumanPlayer(string nameInput) : Player() {
+    name = nameInput;
+  }
    const string& get_name() const override{
      return name;
    }
@@ -86,30 +96,34 @@ class HumanPlayer : public Player{
     }
 
     bool make_trump(const Card &upcard, bool is_dealer,
-                    int round, Suit &order_up_suit) const override {
-        // Implement the make_trump function logic here
-        // Return true or false based on the player's decision
-    }
-
-    void add_and_discard(const Card &upcard) override {
-        // Implement the add_and_discard function logic here
-    }
-
-    Card lead_card(Suit trump) override {
-        // Implement the lead_card function logic here
-        // Return the card to be led
-    }
-
-    Card play_card(const Card &led_card, Suit trump) override {
-        // Implement the play_card function logic here
-        // Return the card to be played
-    }
+                    int round, Suit &order_up_suit) const override;
+    void add_and_discard(const Card &upcard) override ;
+    Card lead_card(Suit trump) override;
+    Card play_card(const Card &led_card, Suit trump) override;
 };
 
 
-HumanPlayer::HumanPlayer(string nameInput) : Player() {
-    name = nameInput;
+
+
+
+
+bool HumanPlayer::make_trump(const Card &upcard, bool is_dealer,
+                int round, Suit &order_up_suit) const {
+    assert(false);
 }
+
+void HumanPlayer::add_and_discard(const Card &upcard) {
+    assert(false);
+}
+
+Card HumanPlayer::lead_card(Suit trump) {
+    assert(false);
+}
+
+Card HumanPlayer::play_card(const Card &led_card, Suit trump){
+    assert(false);
+}
+
 
 
 
@@ -120,18 +134,13 @@ HumanPlayer::HumanPlayer(string nameInput) : Player() {
 
 Player * Player_factory(const string &name, const string &strategy) {
    if(strategy == "Simple"){
-    SimplePlayer sPlayer = SimplePlayer(name);
-    Player * spPtr = & sPlayer;
-    return spPtr;
+    return new SimplePlayer(name);
    }
    else if(strategy == "Human"){
-      HumanPlayer hPlayer = HumanPlayer(name);
-      Player * hpPtr = &hPlayer;
-      return hpPtr;
+      return new HumanPlayer(name);
    }
-   else{
-    return nullptr;
-   }
+  assert(false);
+  return nullptr;
 }
 
 ostream & operator<<(ostream &os, const Player &p) {
