@@ -14,4 +14,18 @@ TEST(test_pack_default_ctor) {
 
 // Add more tests here
 
+TEST(test_make_pack)
+{
+    Pack pack;
+    Card first = Card(NINE, SPADES);
+    ASSERT_EQUAL(pack.deal_one(), first);
+    pack.reset();
+    Card test;
+    for(size_t i = SPADES; i <= DIAMONDS; i++){
+       for(size_t j = NINE; j <= ACE; j++){
+        ASSERT_EQUAL(pack.deal_one(), Card(static_cast<Rank>(j),static_cast<Suit>(i)));
+       }
+   }
+}
+
 TEST_MAIN()
