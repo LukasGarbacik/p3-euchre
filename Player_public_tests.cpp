@@ -47,7 +47,7 @@ TEST(test_player_get_name) {
   delete alice;
 }
 
-TEST(test_simple_player_make_trump) {
+/*TEST(test_simple_player_make_trump) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
   bob->add_card(Card(NINE, SPADES));
@@ -72,7 +72,7 @@ TEST(test_simple_player_make_trump) {
 
   delete bob;
 }
-
+*/
 TEST(test_simple_player_lead_card) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");

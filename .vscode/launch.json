@@ -9,7 +9,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/Card_tests.exe",
+            "program": "${workspaceFolder}/Player_public_tests.exe",
             "args": [],
             "cwd": "${workspaceFolder}"
         }
