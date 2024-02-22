@@ -16,7 +16,12 @@ class SimplePlayer : public Player{
  private:
 
    string name;
+<<<<<<< HEAD
    vector<Card> hand;
+=======
+   vector<Card> hand; //Changed to vector as push_back doesnt work with arrays
+   //Shouldn't need a vector with max hand size as that can be handled separately
+>>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
 
  public:
    SimplePlayer(string nameInput) : Player() {
@@ -26,6 +31,10 @@ class SimplePlayer : public Player{
      return name;
    }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
    void add_card(const Card &c) override {
      assert(hand.size() < MAX_HAND_SIZE);
      hand.push_back(c);
@@ -39,6 +48,11 @@ class SimplePlayer : public Player{
 };
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
 bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
                     int round, Suit &order_up_suit) const 
 {
@@ -47,6 +61,7 @@ bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
 
 void SimplePlayer::add_and_discard(const Card &upcard) 
 {
+<<<<<<< HEAD
   assert(hand.size() != 0);
   Suit trump = upcard.get_suit();
   Card *minCard = new Card(hand[0]);
@@ -61,10 +76,14 @@ void SimplePlayer::add_and_discard(const Card &upcard)
     hand.erase(hand.begin() + minIndex);
     hand.push_back(upcard);
   }
+=======
+  assert(false);
+>>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
 }
 
 Card SimplePlayer::lead_card(Suit trump) 
 {
+<<<<<<< HEAD
   assert(hand.size() != 0);
   Card * returnCard = new Card();
   bool nonTrump = false;
@@ -106,6 +125,13 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
     }
   }
 return *card;
+=======
+  assert(false);
+}
+
+Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
+  assert(false);
+>>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
 }
 
 
