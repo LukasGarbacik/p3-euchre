@@ -32,7 +32,6 @@ TEST(test_player_factory)
 
 /*TEST(test_make_trump)
 {
-
 }*/
 
 TEST_MAIN()
