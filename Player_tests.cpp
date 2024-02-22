@@ -22,11 +22,27 @@ TEST(test_player_factory)
     ASSERT_EQUAL("Human", human->get_name());
     Player * simple = Player_factory("robot", "Simple");
     ASSERT_EQUAL("robot", simple->get_name());
-    Pack pack;
+    Pack pack = Pack();
     Card first = Card(NINE, SPADES);
     ASSERT_EQUAL(pack.deal_one(), first);
-    pack.reset();
-    
+    //pack.reset();
+}
+
+
+TEST(test_simple_player)
+{
+    Player * simple = Player_factory("simp", "Simple");
+    Player * robot = Player_factory("robot", "Simple");
+    ASSERT_EQUAL("robot", simple->get_name());
+    Pack pack;
+    for(size_t j = TEN; j <= ACE; j++){
+        simple->add_card(Card(static_cast<Rank>(j), SPADES));
+        robot->add_card(Card(static_cast<Rank>(j), SPADES));
+    }
+    simple->add_and_discard(Card(NINE, SPADES));
+    for(int i = 0; i < 5; i++){
+        ASSERT_TRUE( simple->play_card(Card(NINE, SPADES), SPADES) == robot->play_card(Card(NINE, SPADES), SPADES) );
+    }
 }
 
 
