@@ -26,6 +26,11 @@ TEST(test_make_pack)
         ASSERT_EQUAL(pack.deal_one(), Card(static_cast<Rank>(j),static_cast<Suit>(i)));
        }
    }
+
+   Pack pack = Pack();
+    Card first = Card(NINE, SPADES);
+    ASSERT_EQUAL(pack.deal_one(), first);
+    pack.reset();
 }
 
 TEST_MAIN()

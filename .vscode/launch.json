@@ -7,14 +7,10 @@
 
     
         {
-            "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-<<<<<<< HEAD
             "name": "Debug",
-=======
->>>>>>> 8a33c9d3a9dd3034d030b2c517fc7eaacac971e0
-            "program": "${workspaceFolder}/Player_public_tests.exe",
+            "program": "${workspaceFolder}/Player_tests.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
