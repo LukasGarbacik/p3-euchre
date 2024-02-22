@@ -46,9 +46,9 @@ TEST(test_simple_player)
 }
 
 
-/*TEST(test_make_trump)
+TEST(test_make_trump)
 {
 
-}*/
+}
 
 TEST_MAIN()
