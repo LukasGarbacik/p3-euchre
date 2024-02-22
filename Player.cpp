@@ -42,7 +42,42 @@ class SimplePlayer : public Player{
 bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
                     int round, Suit &order_up_suit) const 
 {
-  assert(false);
+  assert(round == 1 || round == 2);
+  assert(hand.size() == 5);
+
+  int countFaceAce = 0;
+  if(round == 1){
+    for(size_t i = 0; i < hand.size(); ++i){
+      if(hand[i].get_suit(upcard.get_suit()) == upcard.get_suit() && hand[i].is_face_or_ace()){
+        countFaceAce++;
+      }
+    }
+    if(countFaceAce >= 2){
+      order_up_suit = upcard.get_suit();
+      return true;
+    }
+    else{
+      return false;
+    }
+  } 
+  if(round == 2){
+    if(is_dealer){
+      order_up_suit = Suit_next(upcard.get_suit());
+      return true;
+    }
+    else{
+      for(size_t i = 0; i < hand.size(); ++i){
+        if(hand[i].get_suit() == Suit_next(upcard.get_suit()) && hand[i].is_face_or_ace()){
+          countFaceAce++;
+        }
+      }  
+      if(countFaceAce >= 1){
+        order_up_suit = Suit_next(upcard.get_suit());
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 void SimplePlayer::add_and_discard(const Card &upcard) 
