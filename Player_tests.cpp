@@ -130,4 +130,45 @@ TEST(test_lead_card){
     delete p1;
 }
 
+TEST(test_edge_case_make_trump)
+{
+    Player * p1 = Player_factory("P1", "Simple");
+    Player * p2 = Player_factory("P2", "Simple");
+    Player * p3 = Player_factory("P3", "Simple");
+    Card upcard = Card(TEN, DIAMONDS);
+    Suit OUS;
+
+    p1->add_card(Card(QUEEN, DIAMONDS));
+    p1->add_card(Card(KING, DIAMONDS));
+    p1->add_card(Card());
+    p1->add_card(Card());
+    p1->add_card(Card());
+
+    ASSERT_TRUE(p1->make_trump(upcard, false, 1, OUS));
+    ASSERT_TRUE(OUS == Suit(DIAMONDS));
+
+    p2->add_card(Card(QUEEN, DIAMONDS));
+    p2->add_card(Card(NINE, DIAMONDS));
+    p2->add_card(Card());
+    p2->add_card(Card());
+    p2->add_card(Card());
+    OUS = HEARTS;
+
+    ASSERT_FALSE(p2->make_trump(upcard, false, 2, OUS));
+    ASSERT_TRUE(OUS == HEARTS);
+
+
+    p3->add_card(Card(QUEEN, DIAMONDS));
+    p3->add_card(Card(JACK, HEARTS));
+    p3->add_card(Card());
+    p3->add_card(Card());
+    p3->add_card(Card());
+
+    ASSERT_TRUE(p3->make_trump(upcard, false, 1, OUS));
+    ASSERT_TRUE(OUS == Suit(DIAMONDS));
+
+    delete p1;
+    delete p2;
+    delete p3;
+}
 TEST_MAIN()
