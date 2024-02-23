@@ -50,35 +50,57 @@ TEST(test_simple_player)
 
 TEST(test_sp_make_trump)
 {
-    Player * simple = Player_factory("simp", "Simple");
-    simple->add_card(Card(TEN, HEARTS));
-    simple->add_card(Card(NINE, SPADES));
-    simple->add_card(Card(ACE, SPADES));
-    simple->add_card(Card(JACK, HEARTS));
-    simple->add_card(Card(KING, HEARTS));
-    Card upcard = Card(NINE, HEARTS);
+   Player * simple = Player_factory("simp", "Simple");
+   simple->add_card(Card(TEN, HEARTS));
+   simple->add_card(Card(NINE, SPADES));
+   simple->add_card(Card(ACE, SPADES));
+   simple->add_card(Card(JACK, HEARTS));
+   simple->add_card(Card(KING, HEARTS));
+   Card upcard = Card(NINE, HEARTS);
 
-    Suit orderedUp;
-    ASSERT_TRUE(simple->make_trump(upcard, false, 1, orderedUp));
-    ASSERT_TRUE(orderedUp == HEARTS);
-    upcard = Card(TEN, DIAMONDS);
-    ASSERT_FALSE(simple->make_trump(upcard, false, 1, orderedUp));
-    ASSERT_TRUE(orderedUp != DIAMONDS);
 
-    ASSERT_TRUE(simple->make_trump(Card(TEN, DIAMONDS), false, 2, orderedUp));
-    ASSERT_TRUE(orderedUp == HEARTS);
+   Suit orderedUp;
+   ASSERT_TRUE(simple->make_trump(upcard, false, 1, orderedUp));
+   ASSERT_TRUE(orderedUp == HEARTS);
+   upcard = Card(TEN, DIAMONDS);
+   ASSERT_FALSE(simple->make_trump(upcard, false, 1, orderedUp));
+   ASSERT_TRUE(orderedUp != DIAMONDS);
 
-    ASSERT_TRUE(simple->make_trump(Card(NINE, CLUBS), true, 2, orderedUp));
-    ASSERT_TRUE(orderedUp == SPADES);
 
-    ASSERT_FALSE(simple->make_trump(upcard, true, 1, orderedUp));
-    ASSERT_TRUE(orderedUp != DIAMONDS);
+   ASSERT_TRUE(simple->make_trump(Card(TEN, DIAMONDS), false, 2, orderedUp));
+   ASSERT_TRUE(orderedUp == HEARTS);
 
-    ASSERT_TRUE(simple->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
-    ASSERT_TRUE(orderedUp == HEARTS);
 
-    delete simple;
+   ASSERT_TRUE(simple->make_trump(Card(NINE, CLUBS), true, 2, orderedUp));
+   ASSERT_TRUE(orderedUp == SPADES);
+
+
+   ASSERT_FALSE(simple->make_trump(upcard, true, 1, orderedUp));
+   ASSERT_TRUE(orderedUp != DIAMONDS);
+
+
+   ASSERT_TRUE(simple->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
+   ASSERT_TRUE(orderedUp == HEARTS);
+
+
+   delete simple;
+
+
+   orderedUp = DIAMONDS;
+   Player * match = Player_factory("simp", "Simple");
+   match->add_card(Card(TEN, CLUBS));
+   match->add_card(Card(ACE, SPADES));
+   match->add_card(Card(JACK, HEARTS));
+   match->add_card(Card(JACK, DIAMONDS));
+   match->add_card(Card(NINE, SPADES));
+   ASSERT_TRUE(simple->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
+   ASSERT_TRUE(orderedUp == HEARTS);
+
+
+    delete match;
+
 }
+
 
 
 TEST(add_and_discard){
@@ -104,6 +126,7 @@ TEST(add_and_discard){
     }
 
     delete simple;
+    delete match;
 }
 
 TEST(test_lead_card){
@@ -171,4 +194,41 @@ TEST(test_edge_case_make_trump)
     delete p2;
     delete p3;
 }
+
+TEST(test_is_dealer){
+    Player * simple = Player_factory("simp", "Simple");
+    simple->add_card(Card(TEN, CLUBS));
+    simple->add_card(Card(NINE, SPADES));
+    simple->add_card(Card(ACE, SPADES));
+    simple->add_card(Card(JACK, SPADES));
+    simple->add_card(Card(KING, CLUBS));
+    Card upcard = Card(NINE, HEARTS);
+    Suit OrderUp;
+
+    ASSERT_TRUE(simple->make_trump(upcard, true, 2, OrderUp));
+    ASSERT_EQUAL(OrderUp, DIAMONDS);
+
+}
+
+
+TEST(test_play_card){
+    Player * simple = Player_factory("simp", "Simple");
+    simple->add_card(Card(TEN, CLUBS));
+    simple->add_card(Card(NINE, SPADES));
+    simple->add_card(Card(ACE, SPADES));
+    simple->add_card(Card(JACK, SPADES));
+    simple->add_card(Card(KING, CLUBS));
+    Card lead = Card(QUEEN, SPADES);
+    //Test for when they have to follow suit
+    ASSERT_EQUAL(simple->play_card(lead, SPADES), Card(JACK, SPADES));
+    //Test for when they cannot follow suit
+    ASSERT_EQUAL(simple->play_card(Card(QUEEN, DIAMONDS), HEARTS), Card(NINE, SPADES));
+    //Test left bower edge case 
+    ASSERT_EQUAL(simple->play_card(Card(JACK, CLUBS), CLUBS), Card(JACK, SPADES));
+
+
+
+
+}
+
 TEST_MAIN()

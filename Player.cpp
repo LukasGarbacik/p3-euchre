@@ -47,7 +47,6 @@ bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
 {
   assert(round == 1 || round == 2);
   assert(hand.size() == 5);
-
   int countFaceAce = 0;
   if(round == 1){
     for(size_t i = 0; i < hand.size(); ++i){
@@ -99,28 +98,31 @@ void SimplePlayer::add_and_discard(const Card &upcard)
     hand.erase(hand.begin() + minIndex);
     hand.push_back(upcard);
   }
+  delete minCard;
 }
 
 Card SimplePlayer::lead_card(Suit trump) 
 {
   assert(hand.size() != 0);
-  Card * returnCard = new Card(hand[0]);
+  Card  returnCard = Card(hand[0]);
   bool allTrump = true;
 
   for(size_t i = 0; i < hand.size(); ++i){
-    if(!hand[i].is_trump(trump) && hand[i] > *returnCard){
-      *returnCard = hand[i];
+    if(!hand[i].is_trump(trump)) {
       allTrump = false;
+      if (hand[i] > returnCard){
+         returnCard = hand[i];
+      }
     }
   }
   if(allTrump){
     for(size_t j = 0; j < hand.size(); ++j){
-      if(Card_less(*returnCard, hand[j], trump)){
-        *returnCard = hand[j];
+      if(Card_less(returnCard, hand[j], trump)){
+        returnCard = hand[j];
       }
     }
   }
-  return *returnCard;
+  return returnCard;
 }
 
 Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
@@ -130,7 +132,6 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
   for(size_t i = 0; i < hand.size(); ++i){
     if(hand[i].is_trump(trump)){
       canFollowSuit = true;
-      *card = hand[i];
     }
     if(canFollowSuit && Card_less(*card, hand[i], trump)){
       *card = hand[i];
