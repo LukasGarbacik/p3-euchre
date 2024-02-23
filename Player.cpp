@@ -106,12 +106,15 @@ Card SimplePlayer::lead_card(Suit trump)
   assert(hand.size() != 0);
   Card  returnCard = Card(hand[0]);
   bool allTrump = true;
+  int returnIndex = 0;
+
 
   for(size_t i = 0; i < hand.size(); ++i){
     if(!hand[i].is_trump(trump)) {
       allTrump = false;
       if (hand[i] > returnCard){
          returnCard = hand[i];
+        returnIndex = i;
       }
     }
   }
@@ -119,15 +122,18 @@ Card SimplePlayer::lead_card(Suit trump)
     for(size_t j = 0; j < hand.size(); ++j){
       if(Card_less(returnCard, hand[j], trump)){
         returnCard = hand[j];
+        returnIndex = j;
       }
     }
   }
+  hand.erase(hand.begin() + returnIndex);
   return returnCard;
 }
 
 Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
   assert(hand.size() != 0);
   bool canFollowSuit = false;
+  int returnIndex = 0;
   Card *card = new Card(hand[0]);
   for(size_t i = 0; i < hand.size(); ++i){
     if(hand[i].is_trump(trump)){
@@ -135,16 +141,20 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
     }
     if(canFollowSuit && Card_less(*card, hand[i], trump)){
       *card = hand[i];
+      returnIndex = i;
     }
   }  
   if(!canFollowSuit){
     for(size_t j = 1; j < hand.size(); ++j){
       if(Card_less(hand[j], *card, trump)){
         *card = hand[j];
+        returnIndex = j;
       }
     }
   }
-return *card;
+  Card returnCard = * card;
+  hand.erase(hand.begin() + returnIndex);
+return returnCard;
 }
 
 

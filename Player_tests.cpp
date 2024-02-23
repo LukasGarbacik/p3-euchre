@@ -142,13 +142,16 @@ TEST(test_lead_card){
     ASSERT_TRUE(p1->lead_card(trump) == Card(ACE, SPADES));
 
     trump = CLUBS;
-    ASSERT_TRUE(p1->lead_card(trump) == Card(ACE, SPADES));
+    ASSERT_TRUE(p1->lead_card(trump) == Card(KING, SPADES));
 
     trump = SPADES;
-    p1->add_and_discard(Card(JACK, SPADES));
-    p1->add_and_discard(Card(NINE, SPADES));
+    p1->add_card(Card(JACK, SPADES));
+    p1->add_card(Card(NINE, SPADES));
+    p1->add_and_discard(Card(ACE, SPADES));
+    p1->add_and_discard(Card(QUEEN, SPADES));
 
     ASSERT_TRUE(p1->lead_card(trump) == Card(JACK, SPADES));
+    ASSERT_TRUE(p1->lead_card(trump) == Card(ACE, SPADES));
     
     delete p1;
 }
@@ -208,6 +211,12 @@ TEST(test_is_dealer){
     ASSERT_TRUE(simple->make_trump(upcard, true, 2, OrderUp));
     ASSERT_EQUAL(OrderUp, DIAMONDS);
 
+    Suit OrderUp2;
+
+    ASSERT_FALSE(simple->make_trump(upcard, false, 2, OrderUp2));
+
+
+    delete simple;
 }
 
 
@@ -221,14 +230,14 @@ TEST(test_play_card){
     Card lead = Card(QUEEN, SPADES);
     //Test for when they have to follow suit
     ASSERT_EQUAL(simple->play_card(lead, SPADES), Card(JACK, SPADES));
+    simple->add_card(Card(JACK, SPADES));
     //Test for when they cannot follow suit
     ASSERT_EQUAL(simple->play_card(Card(QUEEN, DIAMONDS), HEARTS), Card(NINE, SPADES));
+    simple->add_card(Card(NINE, SPADES));
     //Test left bower edge case 
     ASSERT_EQUAL(simple->play_card(Card(JACK, CLUBS), CLUBS), Card(JACK, SPADES));
 
-
-
-
+delete simple;
 }
 
 TEST_MAIN()
