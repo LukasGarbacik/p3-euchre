@@ -104,16 +104,16 @@ void SimplePlayer::add_and_discard(const Card &upcard)
 Card SimplePlayer::lead_card(Suit trump) 
 {
   assert(hand.size() != 0);
-  Card * returnCard = new Card();
-  bool nonTrump = false;
+  Card * returnCard = new Card(hand[0]);
+  bool allTrump = true;
 
   for(size_t i = 0; i < hand.size(); ++i){
     if(!hand[i].is_trump(trump) && hand[i] > *returnCard){
       *returnCard = hand[i];
-      nonTrump = true;
+      allTrump = false;
     }
   }
-  if(!nonTrump){
+  if(allTrump){
     for(size_t j = 0; j < hand.size(); ++j){
       if(Card_less(*returnCard, hand[j], trump)){
         *returnCard = hand[j];

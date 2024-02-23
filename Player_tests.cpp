@@ -21,7 +21,9 @@ TEST(test_player_factory)
     ASSERT_EQUAL("Human", human->get_name());
     Player * simple = Player_factory("robot", "Simple");
     ASSERT_EQUAL("robot", simple->get_name());
-    
+
+    delete human;
+    delete simple;
 }
 
 
@@ -40,6 +42,9 @@ TEST(test_simple_player)
     for(int i = 0; i < 5; i++){
         ASSERT_TRUE( simple->play_card(Card(NINE, SPADES), SPADES) == robot->play_card(Card(NINE, SPADES), SPADES) );
     }
+
+    delete simple;
+    delete robot;
 }
 
 
@@ -71,6 +76,8 @@ TEST(test_sp_make_trump)
 
     ASSERT_TRUE(simple->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
     ASSERT_TRUE(orderedUp == HEARTS);
+
+    delete simple;
 }
 
 
@@ -95,6 +102,32 @@ TEST(add_and_discard){
     for(int i = 0; i < 5; i++){
         ASSERT_TRUE( simple->play_card(Card(NINE, SPADES), HEARTS) == match->play_card(Card(NINE, SPADES), HEARTS) );
     }
+
+    delete simple;
+}
+
+TEST(test_lead_card){
+    Player * p1 = Player_factory("Player One", "Simple");
+    Suit trump = HEARTS;
+
+    p1->add_card(Card(TEN, HEARTS));
+    p1->add_card(Card(ACE, SPADES));
+    p1->add_card(Card(JACK, DIAMONDS));
+    p1->add_card(Card(KING, SPADES));
+    p1->add_card(Card(TEN, SPADES));        
+    
+    ASSERT_TRUE(p1->lead_card(trump) == Card(ACE, SPADES));
+
+    trump = CLUBS;
+    ASSERT_TRUE(p1->lead_card(trump) == Card(ACE, SPADES));
+
+    trump = SPADES;
+    p1->add_and_discard(Card(JACK, SPADES));
+    p1->add_and_discard(Card(NINE, SPADES));
+
+    ASSERT_TRUE(p1->lead_card(trump) == Card(JACK, SPADES));
+    
+    delete p1;
 }
 
 TEST_MAIN()
