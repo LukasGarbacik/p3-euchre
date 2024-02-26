@@ -101,6 +101,9 @@ TEST(test_suit_next){
     ASSERT_TRUE(Suit_next(kingHearts.get_suit()) == DIAMONDS);
     ASSERT_TRUE(Suit_next(tenClubs.get_suit()) == SPADES);
 }
-
+TEST(Card_less){
+    //Write Card less testing
+    //Does not have to be for the checkpoint
+}
 
 TEST_MAIN()
