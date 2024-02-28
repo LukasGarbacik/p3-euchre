@@ -3,6 +3,7 @@
 #include <vector>
 #include "Player.hpp"
 #include "Card.hpp"
+#include <algorithm>
 
 using namespace std;
 
@@ -158,9 +159,6 @@ return returnCard;
 }
 
 
-
-
-
   //////////////////////////////////////////////////
  /////  Start of Human Player Implementation //////
 //////////////////////////////////////////////////
@@ -200,24 +198,85 @@ class HumanPlayer : public Player{
     Card play_card(const Card &led_card, Suit trump) override;
 };
 
+
+//Assuming all players will not cheat (SPECS)
+//i.e. human will always pick a suit for screw the dealer
 bool HumanPlayer::make_trump(const Card &upcard, bool is_dealer,
-                int round, Suit &order_up_suit) const {
-    assert(false);
+                        int round, Suit &order_up_suit) const {
+
+  string decision;                      
+
+  print_hand(); //Prints hand before decision is made 
+  cout << "Human player " << name << ", please enter a suit, or \"pass\":\n";
+  cin >> decision;
+
+  if (decision != "pass") {
+    Suit ordered_up = string_to_suit(decision);
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
+//Human will answer with a number corresponding
+//to a sorted card in thier hand
 void HumanPlayer::add_and_discard(const Card &upcard) {
-    assert(false);
+
+  string input;
+  int handIndex;
+
+  print_hand(); //Prints current hand
+  cout << "Discard upcard: [-1]\n"; //has option to discard upcard "-1"
+  cout << "Human player " << name << ", please select a card to discard:\n";
+
+  cin >> input;
+  handIndex = stoi(input); //index of discard card
+
+  if(handIndex == -1){
+    return;
+  }
+  else{ //Assuming a legit index (SPECS)
+    hand.erase(hand.begin() + handIndex);
+    add_card(upcard);
+    sort(hand.begin(), hand.end());
+  }
 }
 
+//User still entering index 
+//Assuming they know what the trump suit is
 Card HumanPlayer::lead_card(Suit trump) {
-    assert(false);
+
+  string input;
+  int handIndex;
+
+  print_hand();
+  cout << "Human player " << name << ", please select a card:\n"; 
+
+  cin >> input;
+  handIndex = stoi(input);
+
+  Card returnCard = hand[handIndex];
+  hand.erase(hand.begin() + handIndex);
+  return returnCard;
 }
 
+//Exact same implication as lead_card()
 Card HumanPlayer::play_card(const Card &led_card, Suit trump){
-    assert(false);
+
+  string input;
+  int handIndex;
+
+  print_hand();
+  cout << "Human player " << name << ", please select a card:\n"; 
+
+  cin >> input;
+  handIndex = stoi(input);
+
+  Card returnCard = hand[handIndex];
+  hand.erase(hand.begin() + handIndex);
+  return returnCard;
 }
-
-
 
 
   /////////////////////////////////////////////
