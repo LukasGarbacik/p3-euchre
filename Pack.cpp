@@ -21,7 +21,7 @@ Pack::Pack(){
 Pack::Pack(istream &pack_input){
     int count = 0;
     
-   while(pack_input){
+   while(pack_input && count < 24){
         pack_input >> cards[count];
         count++;
    }
@@ -61,6 +61,7 @@ void Pack::shuffle(){
             topIndex++;
         }
        }
+
     }
 } 
 

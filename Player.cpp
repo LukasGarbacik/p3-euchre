@@ -89,19 +89,18 @@ void SimplePlayer::add_and_discard(const Card &upcard)
 {
   assert(hand.size() != 0);
   Suit trump = upcard.get_suit();
-  Card *minCard = new Card(hand[0]);
+  Card minCard = Card(hand[0]);
   int minIndex = 0;
   for(size_t i = 1; i < hand.size(); ++i){
-    if(!Card_less(*minCard,hand[i], trump)){
-      *minCard = hand[i];
+    if(!Card_less(minCard,hand[i], trump)){
+      minCard = hand[i];
       minIndex = i;
     }
   }
-  if(Card_less(*minCard, upcard, trump)){
+  if(Card_less(minCard, upcard, trump)){
     hand.erase(hand.begin() + minIndex);
     hand.push_back(upcard);
   }
-  delete minCard;
 }
 
 Card SimplePlayer::lead_card(Suit trump) 
@@ -157,6 +156,7 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
   }
   Card returnCard = * card;
   hand.erase(hand.begin() + returnIndex);
+  delete card;
 return returnCard;
 }
 

@@ -93,7 +93,7 @@ TEST(test_sp_make_trump)
    match->add_card(Card(JACK, HEARTS));
    match->add_card(Card(JACK, DIAMONDS));
    match->add_card(Card(NINE, SPADES));
-   ASSERT_TRUE(simple->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
+   ASSERT_TRUE(match->make_trump(Card(NINE, HEARTS), true, 1, orderedUp));
    ASSERT_TRUE(orderedUp == HEARTS);
 
 

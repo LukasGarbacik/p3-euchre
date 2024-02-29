@@ -27,7 +27,6 @@ TEST(test_make_pack)
        }
    }
 
-   Pack pack = Pack();
     Card first = Card(NINE, SPADES);
     ASSERT_EQUAL(pack.deal_one(), first);
     pack.reset();
