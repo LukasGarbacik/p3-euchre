@@ -44,14 +44,15 @@ class SimplePlayer : public Player{
 
 
 bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
-                    int round, Suit &order_up_suit) const 
+    int round, Suit &order_up_suit) const 
 {
   assert(round == 1 || round == 2);
   assert(hand.size() == 5);
   int countFaceAce = 0;
   if(round == 1){
     for(size_t i = 0; i < hand.size(); ++i){
-      if(hand[i].get_suit(upcard.get_suit()) == upcard.get_suit() && hand[i].is_face_or_ace()){
+      if(hand[i].get_suit(upcard.get_suit()) == upcard.get_suit()
+       && hand[i].is_face_or_ace()){
         countFaceAce++;
       }
     }
@@ -69,8 +70,9 @@ bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
       return true;
     }
     else{
-      for(size_t i = 0; i < hand.size(); ++i){
-        if(hand[i].get_suit() == Suit_next(upcard.get_suit()) && hand[i].is_face_or_ace()){
+      for(size_t i = 0; i < hand.size(); ++i){ //too deeply nested here 
+        if(hand[i].get_suit() == Suit_next(upcard.get_suit())
+         && hand[i].is_face_or_ace()){
           countFaceAce++;
         }
       }  
@@ -211,7 +213,7 @@ bool HumanPlayer::make_trump(const Card &upcard, bool is_dealer,
   cin >> decision;
 
   if (decision != "pass") {
-    Suit ordered_up = string_to_suit(decision);
+    order_up_suit = string_to_suit(decision);
     return true;
   }
   else {
