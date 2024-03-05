@@ -35,7 +35,7 @@ Game::Game(Pack p, Player* playerArray[], int score, bool shuffle)
 
 void Game::play()
 {
-    int team1score = 0, team2score = 0;
+    //int team1score = 0, team2score = 0;
     /*while (team1score < winningScore && team2score < winningScore)
     {
 
