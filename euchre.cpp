@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "Player.hpp"
 #include "Pack.hpp"
 
@@ -17,7 +18,7 @@ class Game {
   bool doesShuffle;
   Pack cards;
   void shuffle();
-  void deal(/* ... */);
+  void deal(int dealerPosition);
   void make_trump(/* ... */);
   void play_hand(/* ... */);
 };
@@ -40,6 +41,68 @@ void Game::play()
 
     }
 }
+
+void Game::shuffle()
+{
+    cards.shuffle();
+}
+
+void Game::deal(int dealerPosition)
+{
+    int Pos = dealerPosition + 1;
+    int counter = 0;
+    while (counter < 4)
+    {
+        if (counter % 2 == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                players[Pos]->add_card(cards.deal_one());
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                players[Pos]->add_card(cards.deal_one());
+            }
+        }
+        counter++;
+        if(Pos == 3){Pos = 0;}
+        else{Pos++;}
+    }
+    while (counter < 8)
+    {
+        if (counter % 2 == 0)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                players[Pos]->add_card(cards.deal_one());
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                players[Pos]->add_card(cards.deal_one());
+            }
+        }
+        counter++;
+        if(Pos == 3){Pos = 0;}
+        else{Pos++;}
+    }
+}
+
+void Game::make_trump(/* ... */)
+{
+    
+}
+
+void Game::play_hand(/* ... */)
+{
+
+}
+
 
 int main (int argc, char **argv){
     if (argc != 12)
