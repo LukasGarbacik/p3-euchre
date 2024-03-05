@@ -36,10 +36,10 @@ Game::Game(Pack p, Player* playerArray[], int score, bool shuffle)
 void Game::play()
 {
     int team1score = 0, team2score = 0;
-    while (team1score < winningScore && team2score < winningScore)
+    /*while (team1score < winningScore && team2score < winningScore)
     {
 
-    }
+    }*/
 }
 
 void Game::shuffle()
@@ -95,7 +95,7 @@ void Game::deal(int dealerPosition)
 
 void Game::make_trump(/* ... */)
 {
-    
+
 }
 
 void Game::play_hand(/* ... */)
