@@ -171,7 +171,6 @@ void Game::make_trump(Card upcard, Suit &trumpSuit, int &pickIndex, int round, i
            cout << players[i]->get_name() << " orders up " << makeTrumpSuit << endl;
        }
    }   
-   cout << "we here" << endl;
    if(i != 4){
       cout << players[i]->get_name() << " orders up " << makeTrumpSuit << endl;    
       return;
