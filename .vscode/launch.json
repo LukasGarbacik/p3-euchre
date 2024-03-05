@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/Pack_public_tests.exe",
+            "program": "${workspaceFolder}/euchre.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

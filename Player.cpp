@@ -18,7 +18,7 @@ using namespace std;
 
 class SimplePlayer : public Player{
  private:
-
+   const string type = "Simple";
    string name;
    vector<Card> hand;
 
