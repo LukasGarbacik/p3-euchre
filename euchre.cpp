@@ -201,13 +201,23 @@ void Game::trick(int &leadPlayer, int &team1tricks, int &team2tricks, Suit trump
     int currentPlayerIndex = leadPlayer;
     int winningPlayerIndex = leadPlayer;
     
+    bool followSuit;
+
     while(counter < 5)
     {
         currentPlayerIndex = ((currentPlayerIndex + 1) % 4);
         Card played = players[currentPlayerIndex]->play_card(leadCard, trumpSuit);
+        if(played.get_suit(trumpSuit) == leadCard.get_suit(trumpSuit)){ followSuit = true; } else{ followSuit = false; }
+
         cout << played << " played by " << players[currentPlayerIndex]->get_name() << endl;
-        if(Card_less(winningCard, played, trumpSuit)){winningCard = played;
-        winningPlayerIndex = currentPlayerIndex;}
+        if(followSuit && Card_less(winningCard, played, trumpSuit)){
+            winningCard = played;
+            winningPlayerIndex = currentPlayerIndex;
+        }
+        else if(!leadCard.is_trump(trumpSuit) && played.is_trump(trumpSuit)){
+            winningCard = played;
+            winningPlayerIndex = currentPlayerIndex;
+        }
 
         counter++;
     }
