@@ -136,14 +136,20 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
   int returnIndex = 0;
   Card *card = new Card(hand[0]);
   for(size_t i = 0; i < hand.size(); ++i){
-    if(hand[i].is_trump(trump)){
+    if(hand[i].get_suit(trump) == led_card.get_suit(trump) && canFollowSuit == false){
       canFollowSuit = true;
-    }
-    if(canFollowSuit && Card_less(*card, hand[i], trump)){
       *card = hand[i];
       returnIndex = i;
     }
   }  
+    if(canFollowSuit){
+      for(size_t i = 0; i < hand.size(); ++i){
+        if(Card_less(*card, hand[i], trump) && hand[i].get_suit(trump) == led_card.get_suit(trump)){
+          *card = hand[i];
+          returnIndex = i;
+        }
+    }
+    }
   if(!canFollowSuit){
     for(size_t j = 1; j < hand.size(); ++j){
       if(Card_less(hand[j], *card, trump)){
