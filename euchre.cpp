@@ -229,6 +229,7 @@ void Game::trick(int &leadPlayer, int &team1tricks, int &team2tricks, Suit trump
 
 
 int main (int argc, char **argv){
+    
     if (argc != 12)
     {
         cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
@@ -236,6 +237,8 @@ int main (int argc, char **argv){
      << "NAME4 TYPE4" << endl;
      return 2;
     }
+    for (int i = 0; i < 12; i++){cout << argv[i] << " ";}
+    cout << endl;
     ifstream inPack(argv[1]);
     if(!inPack)
     {
