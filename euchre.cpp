@@ -39,7 +39,7 @@ void Game::play()
        }
   
       deal(handsDelt); //Each player gets five cards
-      cout << "Hand " << handsDelt % 4 << endl;
+      cout << "Hand " << handsDelt << endl;
       cout << players[handsDelt % 4]->get_name() << " deals" << endl;
       upcard = cards.deal_one();
       cout << upcard << " turned up" << endl;
@@ -128,21 +128,23 @@ bool Game::make_trump(Card upcard, Suit &trumpSuit, int round, int handsDelt){
    while(counter < 4 && !players[index]->make_trump(upcard, false, round, trumpSuit)){ 
        cout << players[index]->get_name() << " passes" << endl; //non dealer and passed
        index++;
+       counter++;
        if(index > 3){
         index = 0;
        }
-       counter++;
-       if(index == 0 && !players[dealerIndex]->make_trump(upcard, true, round, trumpSuit)){
+       if(index == dealerIndex && !players[dealerIndex]->make_trump(upcard, true, round, trumpSuit)){
            cout << players[dealerIndex]->get_name() << " passes" << endl; // dealer and passed 
+           index++;
+           counter++;
        }
-       else if(index == 0){
+       else if(index == dealerIndex){
            cout << players[index]->get_name() << " orders up " << trumpSuit << endl; //dealer and picked trump
-           whoPickedIndex = 3;
+           whoPickedIndex = index;
            players[index]->add_and_discard(upcard); //player after dealer picks up if trump is made
            return true;
        }
    }   
-   if(index != 4){
+   if(counter != 4){
       cout << players[index]->get_name() << " orders up " << trumpSuit << endl; //non dealer picked trump
       whoPickedIndex = index;
       players[dealerIndex]->add_and_discard(upcard); //player after dealer picks up if trump is made
@@ -194,9 +196,9 @@ void Game::play_hand(int &team1, int &team2, int dealerPos, Suit trumpSuit )
 
 void Game::trick(int &leadPlayer, int &team1tricks, int &team2tricks, Suit trumpSuit)
 {
-    Card leadCard = players[leadPlayer]->lead_card(trumpSuit);
+    Card leadCard = players[leadPlayer % 4]->lead_card(trumpSuit);
     Card winningCard = leadCard;
-    cout << leadCard << " led by " << players[leadPlayer]->get_name() << endl;
+    cout << leadCard << " led by " << players[leadPlayer % 4]->get_name() << endl;
     int counter = 2;
     int currentPlayerIndex = leadPlayer;
     int winningPlayerIndex = leadPlayer;
@@ -215,8 +217,10 @@ void Game::trick(int &leadPlayer, int &team1tricks, int &team2tricks, Suit trump
             winningPlayerIndex = currentPlayerIndex;
         }
         else if(!leadCard.is_trump(trumpSuit) && played.is_trump(trumpSuit)){
-            winningCard = played;
-            winningPlayerIndex = currentPlayerIndex;
+            if(Card_less(winningCard, played, trumpSuit)){
+                winningCard = played;
+                winningPlayerIndex = currentPlayerIndex;
+            }
         }
 
         counter++;
