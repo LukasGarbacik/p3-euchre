@@ -11,21 +11,18 @@
             "request": "launch",
             "name": "Debug",
             "program": "${workspaceFolder}/euchre.exe",
-            "args": ["pack.in",  "shuffle", "10", "Edsger", "Simple", "Fran", "Simple", "Gabriel", "Simple", "Herb", "Simple"],
+            "args": ["pack.in", "shuffle", "10", "Edsger", "Simple", "Fran", "Simple", "Gabriel", "Simple", "Herb", "Simple"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "lldb",
-            // "setupCommands": [
-            //     {
-            //         "description": "Enable pretty-printing for gdb",
-            //         "text": "-enable-pretty-printing",
-            //         "ignoreFailures": true
-            //     }
-            // ],
-            // "preLaunchTask": "C/C++: g++ build active file",
-            // "miDebuggerPath": "/usr/bin/gdb"
+            /*"setupCommands": [
+                {
+                    "description": "Redirect input from file",
+                    "text": "exec < euchre_test50.in"
+                }
+            ]*/
         }
     ]
 }

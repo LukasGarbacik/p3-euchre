@@ -112,7 +112,8 @@ Card SimplePlayer::lead_card(Suit trump)
   for(size_t i = 0; i < hand.size(); ++i){
     if(!hand[i].is_trump(trump)) {
       allTrump = false;
-      if (hand[i] > returnCard){
+      if(returnCard.is_trump(trump)){returnCard = hand[i];}
+      if (Card_less(returnCard, hand[i] ,trump)){
          returnCard = hand[i];
         returnIndex = i;
       }
