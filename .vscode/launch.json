@@ -11,11 +11,11 @@
             "request": "launch",
             "name": "Debug",
             "program": "${workspaceFolder}/euchre.exe",
-            "args": [],
+            "args": ["pack.in",  "noshuffle", "3", "Ivan", "Human", "Judea", "Human", "Kunle", "Human", "Liskov", "Human"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "lldb",
             // "setupCommands": [
             //     {

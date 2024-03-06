@@ -64,22 +64,20 @@ bool SimplePlayer::make_trump(const Card &upcard, bool is_dealer,
       return false;
     }
   } 
-  if(round == 2){
-    if(is_dealer){
+  if(is_dealer && round == 2){
+    order_up_suit = Suit_next(upcard.get_suit());
+    return true;
+  }
+  else if (round == 2){
+    for(size_t i = 0; i < hand.size(); ++i){  
+      if(hand[i].get_suit() == Suit_next(upcard.get_suit())
+        && hand[i].is_face_or_ace()){
+        countFaceAce++;
+      }
+    }  
+    if(countFaceAce >= 1){
       order_up_suit = Suit_next(upcard.get_suit());
       return true;
-    }
-    else{
-      for(size_t i = 0; i < hand.size(); ++i){ //too deeply nested here 
-        if(hand[i].get_suit() == Suit_next(upcard.get_suit())
-         && hand[i].is_face_or_ace()){
-          countFaceAce++;
-        }
-      }  
-      if(countFaceAce >= 1){
-        order_up_suit = Suit_next(upcard.get_suit());
-        return true;
-      }
     }
   }
   return false;
