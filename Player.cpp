@@ -33,6 +33,7 @@ class SimplePlayer : public Player{
    void add_card(const Card &c) override {
      assert(hand.size() < MAX_HAND_SIZE);
      hand.push_back(c);
+     sort(hand.begin(), hand.end());
    }
 
     bool make_trump(const Card &upcard, bool is_dealer,
@@ -98,6 +99,7 @@ void SimplePlayer::add_and_discard(const Card &upcard)
   if(Card_less(minCard, upcard, trump)){
     hand.erase(hand.begin() + minIndex);
     hand.push_back(upcard);
+    sort(hand.begin(), hand.end());
   }
 }
 
@@ -148,7 +150,8 @@ Card SimplePlayer::play_card(const Card &led_card, Suit trump) {
   }  
     if(canFollowSuit){
       for(size_t i = 0; i < hand.size(); ++i){
-        if(Card_less(*card, hand[i], trump) && hand[i].get_suit(trump) == led_card.get_suit(trump)){
+        if(Card_less(*card, hand[i], trump) && hand[i].get_suit(trump) 
+        == led_card.get_suit(trump)){
           *card = hand[i];
           returnIndex = i;
         }
@@ -193,6 +196,7 @@ class HumanPlayer : public Player{
    void add_card(const Card &c) override{
      assert(hand.size() < MAX_HAND_SIZE);
      hand.push_back(c);
+     sort(hand.begin(), hand.end());
    }
 
    void print_hand() const {
@@ -285,6 +289,7 @@ Card HumanPlayer::play_card(const Card &led_card, Suit trump){
 
   Card returnCard = hand[handIndex];
   hand.erase(hand.begin() + handIndex);
+  sort(hand.begin(), hand.end());
   return returnCard;
 }
 

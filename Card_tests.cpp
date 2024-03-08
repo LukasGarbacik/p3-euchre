@@ -101,9 +101,21 @@ TEST(test_suit_next){
     ASSERT_TRUE(Suit_next(kingHearts.get_suit()) == DIAMONDS);
     ASSERT_TRUE(Suit_next(tenClubs.get_suit()) == SPADES);
 }
-TEST(Card_less){
-    //Write Card less testing
-    //Does not have to be for the checkpoint
+
+TEST(test_low_val_trump){
+    Card nineSpades(NINE, SPADES);
+    Card jackDiamonds(JACK, DIAMONDS);
+    Card kingHearts(KING, HEARTS);
+    Card tenClubs(TEN, CLUBS);
+    Card nineClubs(NINE, CLUBS);
+    Card aceSpades(ACE, SPADES);
+
+    Suit trump = CLUBS;
+
+    ASSERT_TRUE(Card_less(kingHearts, nineClubs, trump));
+    ASSERT_TRUE(Card_less(kingHearts, tenClubs, trump));
+    ASSERT_FALSE(Card_less(nineClubs, aceSpades, trump));
+    ASSERT_FALSE(Card_less(tenClubs, jackDiamonds, trump ));
 }
 
 TEST_MAIN()

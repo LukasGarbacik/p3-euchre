@@ -54,9 +54,11 @@ void Game::play()
    }
 
     if(team1score >= winningScore){
-        cout << players[0]->get_name() << " and " << players[2]->get_name() << " win!";}
+        cout << players[0]->get_name() << " and " 
+        << players[2]->get_name() << " win!" << endl;}
     else{
-        cout << players[1]->get_name() << " and " << players[3]->get_name() << " win!";}
+        cout << players[1]->get_name() << " and " 
+        << players[3]->get_name() << " win!" << endl;}
 
 
 
@@ -125,29 +127,33 @@ bool Game::make_trump(Card upcard, Suit &trumpSuit, int round, int handsDelt){
     index = dealerIndex + 1;
    }
     int counter = 0;
-   while(counter < 4 && !players[index]->make_trump(upcard, false, round, trumpSuit)){ 
-       cout << players[index]->get_name() << " passes" << endl; //non dealer and passed
+   while(counter < 4 && 
+         !players[index]->make_trump(upcard, false, round, trumpSuit)){ 
+       cout << players[index]->get_name() << " passes" << endl;           
        index++;
        counter++;
        if(index > 3){
         index = 0;
        }
-       if(index == dealerIndex && !players[dealerIndex]->make_trump(upcard, true, round, trumpSuit)){
-           cout << players[dealerIndex]->get_name() << " passes" << endl; // dealer and passed 
+       if(index == dealerIndex && 
+       !players[dealerIndex]->make_trump(upcard, true, round, trumpSuit)){
+           cout << players[dealerIndex]->get_name() << " passes" << endl; 
            index++;
            counter++;
        }
        else if(index == dealerIndex){
-           cout << players[index]->get_name() << " orders up " << trumpSuit << endl; //dealer and picked trump
+           cout << players[index]->get_name() << " orders up " << trumpSuit << endl; 
            whoPickedIndex = index;
-           players[index]->add_and_discard(upcard); //player after dealer picks up if trump is made
+           players[index]->add_and_discard(upcard);
            return true;
        }
    }   
    if(counter != 4){
-      cout << players[index]->get_name() << " orders up " << trumpSuit << endl; //non dealer picked trump
+      cout << players[index]->get_name() << " orders up " << trumpSuit << endl;
       whoPickedIndex = index;
-      players[dealerIndex]->add_and_discard(upcard); //player after dealer picks up if trump is made
+      if(round == 1){
+      players[dealerIndex]->add_and_discard(upcard);
+      }
       return true;
    }
    return false;
@@ -207,21 +213,25 @@ void Game::trick(int &leadPlayer, int &team1tricks, int &team2tricks, Suit trump
 
     while(counter < 5)
     {
-        currentPlayerIndex = ((currentPlayerIndex + 1) % 4);
-        Card played = players[currentPlayerIndex]->play_card(leadCard, trumpSuit);
-        if(played.get_suit(trumpSuit) == leadCard.get_suit(trumpSuit)){ followSuit = true; } else{ followSuit = false; }
-
-        cout << played << " played by " << players[currentPlayerIndex]->get_name() << endl;
-        if(followSuit && Card_less(winningCard, played, trumpSuit)){
+    currentPlayerIndex = ((currentPlayerIndex + 1) % 4);
+    Card played = players[currentPlayerIndex]->play_card(leadCard, trumpSuit);
+    if(played.get_suit(trumpSuit) == leadCard.get_suit(trumpSuit)){ 
+        followSuit = true;
+    }
+     else{ 
+        followSuit = false; 
+    }
+    cout << played << " played by " << players[currentPlayerIndex]->get_name() << endl;
+    if(followSuit && Card_less(winningCard, played, trumpSuit)){
+        winningCard = played;
+        winningPlayerIndex = currentPlayerIndex;
+    }
+    else if(!leadCard.is_trump(trumpSuit) && played.is_trump(trumpSuit)){
+        if(Card_less(winningCard, played, trumpSuit)){
             winningCard = played;
             winningPlayerIndex = currentPlayerIndex;
         }
-        else if(!leadCard.is_trump(trumpSuit) && played.is_trump(trumpSuit)){
-            if(Card_less(winningCard, played, trumpSuit)){
-                winningCard = played;
-                winningPlayerIndex = currentPlayerIndex;
-            }
-        }
+    }
 
         counter++;
     }
